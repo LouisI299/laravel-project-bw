@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
 
+Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
+
 Route::get('/', [PostController::class, 'index']);
 
 Route::get('/dashboard', function () {
