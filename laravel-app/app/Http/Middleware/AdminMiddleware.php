@@ -19,7 +19,7 @@ class AdminMiddleware
 {
     dd(Auth::user()); // or dd(auth()->user());
     
-    if (!Auth::check() || !Auth::user()->isAdmin()) {
+    if (!Auth::check() || !Auth::user()->is_admin) {
         abort(403, 'Unauthorized action.');
     }
 

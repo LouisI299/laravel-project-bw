@@ -10,6 +10,10 @@ use App\Http\Controllers\PostController;
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 
+Route::middleware('auth')->get('/test-auth', function () {
+    return 'Authenticated route works';
+});
+
 
 
 Route::get('/dashboard', function () {
@@ -19,13 +23,13 @@ Route::get('/dashboard', function () {
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('post.show');
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');
+    Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
     Route::post('/posts', [PostController::class, 'store'])->name('post.store');
 
-    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
-    Route::patch('/posts/{post}', [PostController::class, 'update'])->name('post.update');
+    Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+    Route::patch('/post/{post}', [PostController::class, 'update'])->name('post.update');
 
-    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('post.destroy');
+    Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
