@@ -32,6 +32,33 @@ class PostController extends Controller
 
     public function index(){
         $posts = Post::with('user')->latest()->paginate(10);
-        return view('welcome', compact('posts'));
+        return view('home', compact('posts'));
+    }
+
+    public function show(Post $post){
+        return view('post.show', compact('post'));
+    }
+
+    public function edit(Post $post){
+        return view('post.edit', compact('post'));
+    }
+
+    public function update(Request $request, Post $post){
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+        ]);
+
+        $post->update([
+            'title' => $request->title,
+            'content' => $request->content,
+        ]);
+
+        return redirect()->route('post.show', $post);
+    }
+
+    public function destroy(Post $post){
+        $post->delete();
+        return redirect()->route('/');
     }
 }

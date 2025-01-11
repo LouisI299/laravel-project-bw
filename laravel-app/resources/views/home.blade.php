@@ -8,11 +8,20 @@
                     <h2>{{ $post->title }}</h2>
                     <p>{{ $post->content }}</p>
                     <p>Posted by {{ $post->user ? $post->user->name : 'Unknown' }}</p>
+
+                    <a href="{{ route('post.show', $post) }}">Read More</a>
                 </div>
             @endforeach
             @else
                 <p>No posts yet.</p>
             @endif
+
+            @auth
+                @if(auth()->user()->is_admin)
+                    <a href="{{ route('post.create') }}" class="btn btn-success">Create Post</a>
+                @endif
+            @endauth
+
         </section>
         
     </div>
