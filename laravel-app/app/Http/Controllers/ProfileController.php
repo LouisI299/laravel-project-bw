@@ -16,11 +16,9 @@ class ProfileController extends Controller
      */
     public function edit()
     {
+        $user = Auth::user();
     
-    $user = Auth::user();
-
-    
-    return view('profile.edit', compact('user'));
+        return view('profile.edit', compact('user'));
     }
 
     /**
@@ -28,21 +26,30 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+    // Retrieve only the validated fields the user actually sent
+        $data = $request->validated();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
+    // If profile_picture was uploaded, handle the file upload
         if ($request->hasFile('profile_picture')) {
-            $path = $request->file('profile_picture')->store('profile_pics', 'public');
-            $request->user()->profile_picture = $path;
+        $path = $request->file('profile_picture')->store('profile_pics', 'public');
+        $data['profile_picture'] = $path;
         }
 
+    // Fill only the fields present in $data
+        $request->user()->fill($data);
+
+    // If the user changed email, reset verification
+        if (array_key_exists('email', $data)) {
+        $request->user()->email_verified_at = null;
+        }
+
+    // Save user updates
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    // Redirect back to the edit page with a success message
+        return Redirect::route('profile.show', ['user' => $request->user()->id])->with('status', 'profile-updated');
     }
+
 
     /**
      * Delete the user's account.
@@ -69,10 +76,14 @@ class ProfileController extends Controller
      * Show the user's account.
      */
 
-    public function show(Request $request): View
+     public function show(\App\Models\User $user): View
+     {
+         return view('profile.show', compact('user'));
+     }
+
+    public function showOwn()
     {
-        return view('profile.show', [
-            'user' => $request->user(),
-        ]);
+        $user = Auth::user();
+        return view('profile.show', compact('user'));
     }
 }

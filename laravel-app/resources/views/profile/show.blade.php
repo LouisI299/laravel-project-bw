@@ -58,7 +58,7 @@
                         </p>
                     </div>
 
-                    {{-- Optional: Edit Link for the Owner of the Profile --}}
+                    
                     @auth
                         @if(auth()->id() === $user->id)
                             <a 

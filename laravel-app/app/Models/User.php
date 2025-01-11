@@ -22,6 +22,9 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
+        'birthday',
+        'profile_picture',
+        'about_me',
     ];
 
     /**
@@ -45,6 +48,9 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_admin' => 'boolean',
+            'birthday' => 'date',
+            'profile_picture' => 'string',
+            'about_me' => 'string',
         ];
     }
 
