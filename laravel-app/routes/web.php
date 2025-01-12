@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\ContactController;
 
 
 
@@ -21,6 +22,16 @@ Route::get('/dashboard', function () {
 Route::get('/post/{post}', [PostController::class, 'show'])->name('post.show');
 
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+});
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/messages', [ContactController::class, 'showMessages'])->name('admin.contact.index');
+});
+
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/users', [AdminController::class, 'index'])->name('admin.users');

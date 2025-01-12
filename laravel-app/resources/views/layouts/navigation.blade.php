@@ -21,6 +21,14 @@
                             <x-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')">
                                 Manage Users
                             </x-nav-link>
+
+                            <x-nav-link :href="route('admin.contact.index')" :active="request()->routeIs('admin.contact.index')">
+                                Contact Messages
+                            </x-nav-link>
+                        @else
+                            <x-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.index')">
+                                Contact 
+                            </x-nav-link>
                         @endif
                     @endauth
                 </div>
