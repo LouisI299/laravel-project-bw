@@ -26,7 +26,7 @@ class PostController extends Controller
             'user_id' => Auth::id(),
         ]);
 
-        return redirect()->route('/');
+        return redirect()->route('home');
 
     }
 
@@ -59,6 +59,6 @@ class PostController extends Controller
 
     public function destroy(Post $post){
         $post->delete();
-        return redirect()->route('/');
+        return redirect()->route('home');
     }
 }

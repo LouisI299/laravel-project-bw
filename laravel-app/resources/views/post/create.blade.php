@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <form action="{{ route('posts.store') }}" method="POST">
+        <form action="{{ route('post.store') }}" method="POST">
             @csrf
             <div class="mb-4">
                 <label for="title" class="block font-semibold">Title</label>

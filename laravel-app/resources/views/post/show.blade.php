@@ -9,7 +9,7 @@
         @auth
             @if(auth()->user()->is_admin)
                 <a href="{{ route('post.edit', $post) }}" class="btn btn-primary">Edit</a>
-                <form action="{{ route('post.destroy', $post) }}" method="POST" style="display:inline;">
+                <form action="{{ route('post.destroy', $post) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this post?');">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-danger" type="submit">Delete</button>
