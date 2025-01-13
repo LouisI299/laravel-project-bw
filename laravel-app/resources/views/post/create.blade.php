@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <form action="{{ route('post.store') }}" method="POST">
+        <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-4">
                 <label for="title" class="block font-semibold">Title</label>
@@ -37,6 +37,11 @@
                     class="w-full border border-gray-300 dark:border-gray-700 rounded p-2"
                     required
                 >{{ old('content') }}</textarea>
+            </div>
+
+            <div class="mt-4">
+                <label for="image" :value="__('Image')" />
+                <input id="image" class="block mt-1 w-full" type="file" name="image" />
             </div>
 
             <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">

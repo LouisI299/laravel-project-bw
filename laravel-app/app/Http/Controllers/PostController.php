@@ -10,6 +10,7 @@ class PostController extends Controller
 {
     public function create()
     {
+        
         return view('post.create');
     }
 
@@ -18,11 +19,19 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+        }
+
 
         Post::create([
             'title' => $request->title,
             'content' => $request->content,
+            'image' => $imagePath,
             'user_id' => Auth::id(),
         ]);
 

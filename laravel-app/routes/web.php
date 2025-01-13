@@ -13,6 +13,16 @@ use App\Http\Controllers\ContactController;
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
+    Route::post('/post', [PostController::class, 'store'])->name('post.store');
+
+    Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+    Route::patch('/post/{post}', [PostController::class, 'update'])->name('post.update');
+
+    Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
+});
+
 
 
 Route::get('/dashboard', function () {
@@ -45,15 +55,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('/admin/faq', FaqController::class)->except(['index', 'show']);
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
-    Route::post('/post', [PostController::class, 'store'])->name('post.store');
 
-    Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
-    Route::patch('/post/{post}', [PostController::class, 'update'])->name('post.update');
 
-    Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
-});
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
