@@ -6,6 +6,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FriendController;
+use App\Http\Controllers\FriendRequestController;
 
 
 
@@ -23,6 +25,18 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
 });
 
+Route::get('/users/search', [ProfileController::class, 'search'])->name('users.search');
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/friend-request/send/{receiverId}', [FriendRequestController::class, 'send'])->name('friend-request.send');
+    Route::post('/friend-request/accept/{requestId}', [FriendRequestController::class, 'accept'])->name('friend-request.accept');
+    Route::post('/friend-request/decline/{requestId}', [FriendRequestController::class, 'decline'])->name('friend-request.decline');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/friends/{friendId}/add', [FriendController::class, 'add'])->name('friends.add');
+    Route::post('/friends/{friendId}/remove', [FriendController::class, 'remove'])->name('friends.remove');
+});
 
 
 Route::get('/dashboard', function () {

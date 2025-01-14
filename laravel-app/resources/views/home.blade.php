@@ -1,26 +1,35 @@
 <x-app-layout>
-    <container class="bg-white dark:bg-gray-800  shadow-sm sm:rounded-lg text-gray-800 dark:text-gray-300 flex flex-col items-center justify-center gap-2 flex-wrap ">
+    
+    <container class="bg-white dark:bg-gray-800   text-gray-800 dark:text-gray-300 flex flex-col items-center justify-center gap-2 flex-wrap ">
         <h1 class="text-xl ">Welcome to the Sports Community.</h1>
         
-        <section class="flex flex-col gap-2 w-full"> 
+        <section class="postContainer"> 
             @if ($posts->count())
             @foreach ($posts as $post)
-                <div class=" border-solid border rounded border-gray-200 dark:border-gray-700 overflow-scroll  w-[1/2] ">
-                    <div class="flex flex-row items-center justify-between px-1"><h2 class="text-lg">{{ $post->title }}</h2>
-                        <h2 >By: {{ $post->user ? $post->user->name : 'Unknown' }}</h2>
+                <div class="post border-solid border rounded border-gray-200 dark:border-gray-700 overflow-scroll  w-[1/2] ">
+                    <div class="postHeader"><h2 class="text-lg">{{ $post->title }}</h2>
+                        <div>By: {{ $post->user ? $post->user->name : 'Unknown' }} <img src="{{ $post->user->profile_picture ? asset('storage/' . $post->user->profile_picture) : asset('storage/images/default-avatar.png') }}" alt="{{ $post->user->name }}'s Profile Picture" ></div>
+                        
                     </div>
                     @if ($post->image)
-                    <div class= "">
-                        <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="w-full h-28 object-fill object-center">
+                    <div class= "postImg">
+                        <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" >
 
                     </div>
                     @endif
                     
-                    
-                    <p>{{ $post->content }}</p>
+                    <div class="postContent">
+                        <p>{{ $post->content }}</p>
                     
 
-                    <a href="{{ route('post.show', $post) }}">Read More</a>
+                        
+                    </div>
+
+                    <div class="postFooter">
+                        <a href="{{ route('post.show', $post) }}">Read More</a>
+                        <p>Posted on: {{ $post->created_at->format('d M Y') }}</p>
+                    </div>
+                    
                 </div>
             @endforeach
             @else

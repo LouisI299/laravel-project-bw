@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -86,4 +87,18 @@ class ProfileController extends Controller
         $user = Auth::user();
         return view('profile.show', compact('user'));
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Search for users based on name, email, or any other field
+        $users = User::where('name', 'LIKE', "%{$query}%")
+            ->orWhere('email', 'LIKE', "%{$query}%")
+            ->paginate(10); // Paginate results
+
+        return view('profile.search', compact('users', 'query'));
+    }
+
+    
 }

@@ -58,6 +58,38 @@
                         </p>
                     </div>
 
+                    @auth
+                        @if ($user->id !== auth()->id()) 
+        
+                            @if (auth()->user()->friends->contains($user))
+           
+                                <form action="{{ route('friends.remove', $user->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">Remove Friend</button>
+                                </form>
+                            @elseif(auth()->user()->hasSentFriendRequest($user))
+            
+                                <p>{{ __('Friend request sent.') }}</p>
+                            @elseif(auth()->user()->hasReceivedFriendRequest($user))
+            
+                                <form action="{{ route('friend-request.accept', $user->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success">Accept</button>
+                                </form>
+                                <form action="{{ route('friend-request.decline', $user->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">Decline</button>
+                                </form>
+                            @else
+           
+                                <form action="{{ route('friend-request.send', $user->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary">Add Friend</button>
+                                </form>
+                            @endif
+                        @endif
+                    @endauth
+
                     
                     @auth
                         @if(auth()->id() === $user->id)
