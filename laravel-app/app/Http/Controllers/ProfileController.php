@@ -80,11 +80,18 @@ class ProfileController extends Controller
 
      public function show(\App\Models\User $user): View
      {
-        $request = FriendRequest::where('sender_id', $user->id)
+        if (Auth::user()){
+            $request = FriendRequest::where('sender_id', $user->id)
             ->where('receiver_id', Auth::user()->id)
             ->where('status', 'pending')
             ->first();
-         return view('profile.show', compact('user', 'request'));
+        
+            
+            return view('profile.show', compact('user', 'request'));
+        }else {
+            return view('profile.show', compact('user'));
+        }
+        
      }
 
     public function showOwn()

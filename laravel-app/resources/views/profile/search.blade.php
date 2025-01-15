@@ -10,11 +10,17 @@
             @if ($users->count())
                 <ul>
                     @foreach ($users as $user)
-                        <li class="border-b border-gray-200 dark:border-gray-700 p-4">
-                            <a href="{{ route('profile.show', $user->id) }}" class="text-blue-500">
-                                {{ $user->name }}
-                            </a>
-                            <p class="text-sm text-gray-500">{{ $user->email }}</p>
+                        <li class="searchResult border-b border-gray-200 dark:border-gray-700 p-4">
+                            <div class="searchImg">
+                                <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('storage/images/default-avatar.png') }}" alt="{{ $user->name }}'s Profile Picture" >
+                            </div>
+                            <div>
+                                <a href="{{ route('profile.show', $user->id) }}" class="text-gray-200">
+                                    {{ $user->name }}
+                                </a>
+                                <p class="text-sm text-gray-500">{{ $user->email }}</p>
+                            </div>
+                            
                         </li>
                     @endforeach
                 </ul>

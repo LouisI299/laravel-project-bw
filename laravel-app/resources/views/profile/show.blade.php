@@ -11,12 +11,11 @@
         {{-- Main container --}}
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             
-            {{-- Profile Card --}}
+            
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    
-                    {{-- Profile Picture --}}
-                    @if($user->profile_picture)
+                <div class="profile">
+                    <div class="profileContent">
+                        @if($user->profile_picture)
                         <div class="mb-4">
                             <img 
                                 src="{{ asset('storage/' . $user->profile_picture) }}" 
@@ -34,29 +33,44 @@
                         </div>
                     @endif
 
-                    {{-- Name --}}
-                    <div class="mb-4">
-                        <strong>{{ __('Name:') }}</strong>
-                        <span>{{ $user->name }}</span>
+                    <div class="profileInfo">
+                        <div class="mb-4">
+                            <strong>{{ __('Name:') }}</strong>
+                            <span>{{ $user->name }}</span>
+                        </div>
+                        <div class="mb-4">
+                            <strong>{{ __('Birthday:') }}</strong>
+                            @if($user->birthday)
+                                <span>{{ \Carbon\Carbon::parse($user->birthday)->format('d M Y') }}</span>
+                            @else
+                                <span>{{ __('Not provided') }}</span>
+                            @endif
+                        </div>
+                        <div class="mb-4">
+                            <strong>{{ __('Email:') }}</strong>
+                            <p class="mt-1 text-gray-700 dark:text-gray-300">
+                                {{ $user->email ?? __('No information provided.') }}
+                            </p>
+                        </div>
+                        <div class="mb-4">
+                            <strong>{{ __('About Me:') }}</strong>
+                            <p class="mt-1 text-gray-700 dark:text-gray-300">
+                                {{ $user->about_me ?? __('No information provided.') }}
+                            </p>
+                        </div>
                     </div>
+                    </div>
+                    
+                    
+                    
+                    
+                    
 
-                    {{-- Birthday --}}
-                    <div class="mb-4">
-                        <strong>{{ __('Birthday:') }}</strong>
-                        @if($user->birthday)
-                            <span>{{ \Carbon\Carbon::parse($user->birthday)->format('d M Y') }}</span>
-                        @else
-                            <span>{{ __('Not provided') }}</span>
-                        @endif
-                    </div>
+                    
+                    
 
-                    {{-- About Me --}}
-                    <div class="mb-4">
-                        <strong>{{ __('About Me:') }}</strong>
-                        <p class="mt-1 text-gray-700 dark:text-gray-300">
-                            {{ $user->about_me ?? __('No information provided.') }}
-                        </p>
-                    </div>
+                    
+                    
 
                     @auth
                         @if ($user->id !== auth()->id()) 

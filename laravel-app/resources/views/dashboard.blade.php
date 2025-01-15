@@ -56,7 +56,7 @@
                             @foreach ($posts as $post)
                                 <div class="post mb-6 p-4 bg-gray-100 dark:bg-gray-700 rounded">
                                     <div class="postHeader"><h2 class="text-lg">{{ $post->title }}</h2>
-                                        <div>By: {{ $post->user ? $post->user->name : 'Unknown' }} <img src="{{ $post->user->profile_picture ? asset('storage/' . $post->user->profile_picture) : asset('storage/images/default-avatar.png') }}" alt="{{ $post->user->name }}'s Profile Picture" ></div>
+                                        <div>By: <a href="{{ route('profile.show', $post->user->id)}}">{{ $post->user ? $post->user->name : 'Unknown' }} <img src="{{ $post->user->profile_picture ? asset('storage/' . $post->user->profile_picture) : asset('storage/images/default-avatar.png') }}" alt="{{ $post->user->name }}'s Profile Picture" ></a></div>
                                         
                                     </div>
                                     @if ($post->image)
