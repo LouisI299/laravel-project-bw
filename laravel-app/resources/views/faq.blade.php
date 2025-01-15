@@ -12,7 +12,11 @@
                     @auth
                         @if(auth()->user()->is_admin)
                             <a href="{{ route('faq.create') }}" class="btn btn-success">Create FAQ</a>
+                            <a href="{{ route('admin.proposed-faqs.index')}}" class="btn btn-success">See proposed FAQ's</a>
+                        @else
+                            <a href="{{ route('faq.propose') }}" class="btn btn-success">Propose FAQ</a>
                         @endif
+
                     @endauth
                 </div>
             </div>

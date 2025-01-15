@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\User;
+use App\Models\FriendRequest;
 
 class ProfileController extends Controller
 {
@@ -79,7 +80,11 @@ class ProfileController extends Controller
 
      public function show(\App\Models\User $user): View
      {
-         return view('profile.show', compact('user'));
+        $request = FriendRequest::where('sender_id', $user->id)
+            ->where('receiver_id', Auth::user()->id)
+            ->where('status', 'pending')
+            ->first();
+         return view('profile.show', compact('user', 'request'));
      }
 
     public function showOwn()

@@ -72,11 +72,11 @@
                                 <p>{{ __('Friend request sent.') }}</p>
                             @elseif(auth()->user()->hasReceivedFriendRequest($user))
             
-                                <form action="{{ route('friend-request.accept', $user->id) }}" method="POST">
+                                <form action="{{ route('friend-request.accept', $request->id) }}" method="POST">
                                     @csrf
                                     <button type="submit" class="btn btn-success">Accept</button>
                                 </form>
-                                <form action="{{ route('friend-request.decline', $user->id) }}" method="POST">
+                                <form action="{{ route('friend-request.decline', $request->id) }}" method="POST">
                                     @csrf
                                     <button type="submit" class="btn btn-danger">Decline</button>
                                 </form>

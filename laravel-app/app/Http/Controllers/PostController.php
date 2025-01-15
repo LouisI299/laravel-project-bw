@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -40,8 +41,24 @@ class PostController extends Controller
     }
 
     public function index(){
-        $posts = Post::with('user')->latest()->paginate(10);
+        $adminIds = User::where('is_admin', 1)->pluck('id')->toArray();
+        $posts = Post::whereIn('user_id', $adminIds)->latest()->paginate(10);
         return view('home', compact('posts'));
+    }
+
+    public function friendsPosts(){
+        $user = Auth::user();
+
+    
+        $friendIds = $user->friends->pluck('id')->toArray();
+
+    
+        $posts = Post::whereIn('user_id', $friendIds)
+            ->orWhere('user_id', $user->id)
+            ->latest()
+            ->paginate(10);
+
+        return view('dashboard', compact('posts'));
     }
 
     public function show(Post $post){

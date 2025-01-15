@@ -3,7 +3,3 @@
 @tailwind utilities;
 
 @import "bootstrap/dist/css/bootstrap.min.css";
-
-.postContainer {
-    width: 90%;
-}

@@ -91,12 +91,18 @@ class User extends Authenticatable
 
     public function hasSentFriendRequest($user)
     {
-        return $this->sentRequests()->where('receiver_id', $user->id)->exists();
+    return $this->sentRequests()
+                ->where('receiver_id', $user->id)
+                ->where('status', 'pending')
+                ->exists();
     }
 
     public function hasReceivedFriendRequest($user)
     {
-        return $this->receivedRequests()->where('sender_id', $user->id)->exists();
+        return $this->receivedRequests()
+                ->where('sender_id', $user->id)
+                ->where('status', 'pending')
+                ->exists();
     }
 
     public function isFriendsWith($user)

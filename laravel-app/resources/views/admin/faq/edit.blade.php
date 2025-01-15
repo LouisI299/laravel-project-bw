@@ -1,16 +1,16 @@
 <x-app-layout>
-    <h1>Create New FAQ</h1>
+    <h1>Edit FAQ</h1>
 
     <form action="{{ route('faq.store') }}" method="POST">
         @csrf
         <div>
             <label for="question">Question</label>
-            <input type="text" name="question" id="question" required>
+            <input type="text" name="question" id="question" required value="{{ $faq->question }}">
         </div>
 
         <div>
             <label for="answer">Answer</label>
-            <textarea name="answer" id="answer" required></textarea>
+            <textarea name="answer" id="answer" placeholder="{{ $faq->answer }}"></textarea>
         </div>
 
         <div>
@@ -22,6 +22,6 @@
             </select>
         </div>
 
-        <button type="submit">Create FAQ</button>
+        <button type="submit">Update FAQ</button>
     </form>
 </x-app-layout>
